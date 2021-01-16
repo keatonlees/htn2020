@@ -1,7 +1,9 @@
 import React from "react";
 import "./App.css";
+import TestPage from './pages/TestPage';
 
 function Todo({ todo, index, completeTodo, removeTodo }) {
+
   return (
     <div
       className="todo"
@@ -64,6 +66,7 @@ function App() {
 
   return (
     <div className="app">
+      <TestPage />
       <div className="todo-list">
         <TodoForm addTodo={addTodo} />
         {todos.map((todo, index) => (
