@@ -63,12 +63,93 @@ def get_date():
 
 @app.route('/create_task', methods=['POST'])
 def create_task():
-    task_title = request.form['title'] # Task title
-    task_content = request.form['content'] # Task content
-    date_end = request.form['date_end'] # Task due date
+    title = request.form['title'] # Task title
+    content = request.form['content'] # Task content
+    due = request.form['date_end'] # Task due date
+
+    # Create the new tasks
+    new_task = task(task_title=task, task_content=content, date_end=due)
+
+    # Try to add to db
+    try:
+        db.session.add(new_task)
+        db.session.commit()
+        return True # Return True if commit is successful
+    except:
+        return False
 
 
+@app.route('/delete_task/<int:id>')
+def delete_task(id):
+    task_to_delete = task.query.get_or_404(id) # Get task from id
 
+    # Try to delete from db
+    try:
+        db.session.delete(task_to_delete)
+        db.session.commit()
+        return True # Return True if commit is successful
+    except:
+        return False
+
+
+@app.route('/edit_task<int:id>', methods=['GET', 'POST'])
+def edit_task(id):
+    task_to_edit = task.query.get_or_404(id) # Get task from id
+
+    if request.method == 'POST':
+        task_to_edit.task_title = request.form['title']
+        task_to_edit.task_content = request.form['content']
+
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False
+
+
+@app.route('/create_tag', methods=['POST'])
+def create_tag():
+    title = request.form['title'] # Tag title
+    description = request.form['desc'] # Tag desc
+
+    # Create the new tag
+    new_tag = tag(tag_title=title, task_desc=description)
+
+    # Try to add to db
+    try:
+        db.session.add(new_tag)
+        db.session.commit()
+        return True # Return True if commit is successful
+    except:
+        return False
+
+
+@app.route('/delete_tag/<int:id>')
+def delete_tag(id):
+    tag_to_delete = task.query.get_or_404(id) # Get tag from id
+
+    # Try to delete from db
+    try:
+        db.session.delete(tag_to_delete)
+        db.session.commit()
+        return True # Return True if commit is successful
+    except:
+        return False
+
+
+@app.route('/edit_task<int:id>', methods=['GET', 'POST'])
+def edit_task(id):
+    task_to_edit = task.query.get_or_404(id) # Get task from id
+
+    if request.method == 'POST':
+        task_to_edit.task_title = request.form['title']
+        task_to_edit.task_content = request.form['content']
+
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False
 
 if __name__ == '__main__':
     app.run(debug=True)
