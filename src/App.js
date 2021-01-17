@@ -1,19 +1,18 @@
 import React from "react";
 import "./App.css";
-import TestPage from './pages/TestPage';
+import TitleBlock from "./pages/TitleBlock";
 
 function Todo({ todo, index, completeTodo, removeTodo }) {
-
   return (
     <div
       className="todo"
       style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
     >
-      {todo.text}
       <div>
-        <button onClick={() => completeTodo(index)}>Cross Off</button>
-        <button onClick={() => removeTodo(index)}>Remove</button>
+        <button onClick={() => completeTodo(index)}>Completed</button>
+        {/* <button onClick={() => removeTodo(index)}>Remove</button> */}
       </div>
+      {todo.text}
     </div>
   );
 }
@@ -66,7 +65,8 @@ function App() {
 
   return (
     <div className="app">
-      <TestPage />
+      <TitleBlock />
+
       <div className="todo-list">
         <TodoForm addTodo={addTodo} />
         {todos.map((todo, index) => (

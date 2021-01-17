@@ -1,16 +1,12 @@
-AppBody {
-  text-align: center;
-}
-
 .app {
-  width: 200px;
+  width: 350px;
   height: 100vh;
   padding: 30px;
 }
 
 .todo-list {
   border-radius: 4px;
-  max-width: 400px;
+  max-width: 100%;
   padding: 2px;
 }
 

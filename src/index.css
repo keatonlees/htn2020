@@ -7,9 +7,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   background-color: sandybrown;
-  display: flex;
-  justify-content: center;
-  text-align: center;
 }
 
 code {
