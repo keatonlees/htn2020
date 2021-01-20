@@ -2,40 +2,13 @@ from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import pytz
+import models
+from models import init_db
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
-db = SQLAlchemy(app)
-
-
-task_tag_table = db.Table('task_tag',
-    db.Column('task_id', db.Integer, db.ForeignKey('task.task_id')),
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.tag_id'))
-)
-
-
-class task(db.Model):
-    __tablename__ = 'task'
-    task_id = db.Column(db.Integer, nullable=False, primary_key=True)
-    task_title = db.Column(db.String(50), nullable=False)
-    task_content = db.Column(db.String(500), nullable=False)
-    date_start = db.Column(db.DateTime, default=datetime.utcnow)
-    date_end = db.Column(db.DateTime)
-    tags = db.relationship("tag", secondary=task_tag_table, backref=db.backref('tasks_associated', lazy='joined'))
-
-    def __repr__(self):
-        return '<Task %r>' % self.task_id
-
-
-class tag(db.Model):
-    __tablename__ = 'tag'
-    tag_id = db.Column(db.Integer, nullable=False, primary_key=True)
-    tag_title = db.Column(db.String(50), nullable=False)
-    tag_desc = db.Column(db.String(500))
-
-    def __repr__(self):
-        return '<Tag %r>' % self.tag_id
-
+init_db(app)
 
 
 def get_timezone():
@@ -68,7 +41,7 @@ def create_task():
     due = request.form['date_end'] # Task due date
 
     # Create the new tasks
-    new_task = task(task_title=task, task_content=content, date_end=due)
+    new_task = Task(task_title=task, task_content=content, date_end=due)
 
     # Try to add to db
     try:
@@ -81,7 +54,7 @@ def create_task():
 
 @app.route('/delete_task/<int:id>')
 def delete_task(id):
-    task_to_delete = task.query.get_or_404(id) # Get task from id
+    task_to_delete = Task.query.get_or_404(id) # Get task from id
 
     # Try to delete from db
     try:
@@ -94,7 +67,7 @@ def delete_task(id):
 
 @app.route('/edit_task<int:id>', methods=['GET', 'POST'])
 def edit_task(id):
-    task_to_edit = task.query.get_or_404(id) # Get task from id
+    task_to_edit = Task.query.get_or_404(id) # Get task from id
 
     if request.method == 'POST':
         task_to_edit.task_title = request.form['title']
@@ -113,7 +86,7 @@ def create_tag():
     description = request.form['desc'] # Tag desc
 
     # Create the new tag
-    new_tag = tag(tag_title=title, task_desc=description)
+    new_tag = Tag(tag_title=title, task_desc=description)
 
     # Try to add to db
     try:
@@ -126,7 +99,7 @@ def create_tag():
 
 @app.route('/delete_tag/<int:id>')
 def delete_tag(id):
-    tag_to_delete = task.query.get_or_404(id) # Get tag from id
+    tag_to_delete = Task.query.get_or_404(id) # Get tag from id
 
     # Try to delete from db
     try:
@@ -138,8 +111,8 @@ def delete_tag(id):
 
 
 @app.route('/edit_task<int:id>', methods=['GET', 'POST'])
-def edit_task(id):
-    task_to_edit = task.query.get_or_404(id) # Get task from id
+def edit_task_2(id): # Two functions with the same name
+    task_to_edit = Task.query.get_or_404(id) # Get task from id
 
     if request.method == 'POST':
         task_to_edit.task_title = request.form['title']
