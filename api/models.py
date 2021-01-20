@@ -24,7 +24,7 @@ class Task(db.Model):
     tags = db.relationship("Tag", secondary=task_tag_table, backref=db.backref('tasks_associated', lazy='joined'))
 
     def __repr__(self):
-        return '<Task %r>' % self.task_id
+        return '<Task %r>' % self.id
 
 
 class Tag(db.Model):
@@ -33,4 +33,4 @@ class Tag(db.Model):
     tag_desc = db.Column(db.String(500))
 
     def __repr__(self):
-        return '<Tag %r>' % self.tag_id
+        return '<Tag %r>' % self.id
