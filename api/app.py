@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+import datetime
 import pytz
 import models
 from models import init_db
@@ -30,7 +30,8 @@ def index():
 def get_date():
     local_dt = get_timezone()
     return jsonify({
-        'date' : local_dt.strftime("%A, %B %d")
+        'date' : local_dt.strftime("%B %d, %Y")
+        # 'date' : local_dt.strftime("%A, %B %d")
     })
 
 
