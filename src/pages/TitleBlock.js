@@ -1,25 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { Component } from "react";
 import Heading from "../components/Heading";
+import classes from '../components/Task.module.css'
 
-var date;
-function TitleBlock() {
-  useEffect(() => {
-    fetch("/_get_date")
+class TitleBlock extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: null
+    };
+  }
+  
+  componentDidMount() {
+    fetch('/_get_date')
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        date = data["date"];
-        console.log(date);
+        this.setState({ date: data["date"]})
       });
-  }, []);
+  };
 
-  return (
-    <div>
-      <Heading />
-      <h1>DATE: { date }</h1>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <Heading />
+        <p className={ classes.TitleBlock } >{ this.state.date }</p>
+      </div>
+    );
+  }
 }
 
 export default TitleBlock;

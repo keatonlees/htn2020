@@ -1,9 +1,10 @@
 import React from "react";
+import classes from './Task.module.css';
 
 function Heading() {
   return (
     <div>
-      <h2>Today</h2>
+      <p className={ classes.Heading }>Today</p>
     </div>
   );
 }

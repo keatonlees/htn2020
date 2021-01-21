@@ -21,3 +21,16 @@
   margin-bottom: 6px;
   padding: 3px 10px;
 }
+
+.input {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  background-color: #e6e6e6;
+  border: none;
+  -webkit-box-shadow: 0 0 10px rgb(235, 235, 235);
+    box-shadow: 0 0 10px rgb(235, 235, 235);
+  height: 40px;
+  width: 90%;
+  border-radius: 5px;
+  padding-left: 1rem;
+}
