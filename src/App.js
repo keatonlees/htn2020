@@ -2,8 +2,7 @@ import React from "react";
 import "./App.css";
 import TitleBlock from "./pages/TitleBlock";
 import Task from './components/Task';
-
-let tags = ['Home', 'School', 'Work'];
+import axios from './axios';
 
 // function Todo({ todo, index, completeTodo, removeTodo }) {
 //   return (
@@ -23,27 +22,80 @@ let tags = ['Home', 'School', 'Work'];
 function TodoForm({ addTodo }) {
   const [value, setValue] = React.useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!value) return;
-    addTodo(value);
-    setValue("");
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!value) return;
+  //   addTodo(value);
+  //   setValue("");
+  // };
+
+  function createTask(form) {
+    axios.post('/create_task', form)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={() => createTask(this)}>
+      <label for="title" >Title</label>
       <input
-        placeholder="New task"
+        id="title"
+        name="title"
         type="text"
         className="input"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+      /><br /><br />
+      <label for="content" >Description</label>
+      <input
+        id="content"
+        name="content"
+        type="text"
+        className="input"
+      /><br /><br />
+      <label for="tags" >Tags</label><br />
+      <select
+        id="tags"
+        name="tags"
+        className="input" >
+          <option value="Home" >Home</option>
+          <option value="Work" >Work</option>
+          <option value="School" >School</option>
+      </select><br /><br />
+      <label for="date_end" >Due</label>
+      <input
+        id="date_end"
+        name="date_end"
+        type="text"
+        className="input"
+      /><br /><br />
+      <input
+        type="submit"
+        value="Create task"
       />
     </form>
   );
 }
 
-function App() {
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tasks: null
+    };
+  }
+  
+  componentDidMount() {
+    fetch('/_get_date')
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        this.setState({ date: data["date"]})
+      });
+  };
   const [todos, setTodos] = React.useState([]);
 
   const addTodo = (text) => {
@@ -69,7 +121,7 @@ function App() {
 
   return (
     <div className="app">
-      <TodoForm addTodo={addTodo} />
+      <TodoForm />
       <TitleBlock />
       <div className="todo-list">
         {todos.map((todo, index) => (
