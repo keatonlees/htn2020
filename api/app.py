@@ -34,6 +34,10 @@ def get_date():
         # 'date' : local_dt.strftime("%A, %B %d")
     })
 
+@app.route('/get_tasks', methods=['GET'])
+def get_tasks():
+    tasks = todo.query.order_by(todo.date_created).all()
+
 
 @app.route('/create_task', methods=['POST'])
 def create_task():
