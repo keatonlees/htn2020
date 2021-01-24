@@ -49,7 +49,7 @@ class App extends Component {
             return <Task task={
               {
                 'id': todo.id,
-                'title': todo.content,
+                'title': todo.title,
                 'due_date': todo.due,
                 'tags': [
                   {

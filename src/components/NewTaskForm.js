@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
+import classes from './Task.module.css';
 
 function NewTaskForm() {
     const [dueDate, setDueDate] = useState('');
   
     return (
-      <form action='http://127.0.0.1:5000/create_task' method='POST' >
+      <form action='http://127.0.0.1:5000/create_task' method='POST' className={ classes.Form } >
         <label for="title" >Title</label>
         <input
           id="title"

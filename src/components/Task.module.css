@@ -84,3 +84,11 @@
     padding: 0;
     margin: 0 0 2.5rem 0;
 }
+
+.Form {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 10px rgb(235, 235, 235);
+    box-shadow: 0 0 10px rgb(235, 235, 235);
+    background-color: #fff;
+    padding: 1.5rem;
+}
