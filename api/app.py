@@ -49,7 +49,8 @@ def get_tasks():
             'id': task.id,
             'title': task.task_title,
             'content': task.task_content,
-            'due': task.date_end
+            'due': task.date_end,
+            'tag': task.tags[0].tag_title
         }
     return jsonify(tasks)
 
@@ -59,12 +60,18 @@ def create_task():
     title = request.form.get('title') # Task title
     content = request.form.get('content') # Task content
     due = datetime.strptime(request.form.get('date_end'), '%a, %b %d %Y %H:%M:%S') # Task due date
+    tag_name = request.form.get('tags')
+
     # Create the new tasks
     new_task = Task(task_title=title, task_content=content, date_end=due)
+
+    # Add the tag
+    new_tag = Tag(tag_title=tag_name, tags_associated=[new_task])
 
     # Try to add to db
     try:
         db.session.add(new_task)
+        db.session.add(new_tag)
         db.session.commit()
         return redirect('http://localhost:3000/')
     except:

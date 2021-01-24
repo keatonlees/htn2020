@@ -4,8 +4,6 @@ import TitleBlock from "./pages/TitleBlock";
 import Task from './components/Task';
 import NewTaskForm from './components/NewTaskForm';
 
-const tags = ['Home', 'Work', 'School'];
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +52,7 @@ class App extends Component {
                 'due_date': todo.due,
                 'tags': [
                   {
-                    'title': tags[Math.floor(Math.random() * Math.floor(3))]
+                    'title': todo.tag
                   }
                 ]
               }
