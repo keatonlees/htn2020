@@ -71,7 +71,7 @@ def create_task():
         return {'message': 'error'}, 400
 
 
-@app.route('/delete_task/<int:id>')
+@app.route('/delete_task/<int:id>', methods=['POST'])
 def delete_task(id):
     task_to_delete = Task.query.get_or_404(id) # Get task from id
 
@@ -79,9 +79,9 @@ def delete_task(id):
     try:
         db.session.delete(task_to_delete)
         db.session.commit()
-        return True # Return True if commit is successful
+        return redirect('http://localhost:3000/')
     except:
-        return False
+        return {'message': 'error'}, 400
 
 
 @app.route('/edit_task<int:id>', methods=['GET', 'POST'])

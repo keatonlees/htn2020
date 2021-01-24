@@ -26,6 +26,19 @@ class App extends Component {
       console.log(error)
     })
   };
+
+  updateTasks() {
+    fetch('/get_tasks')
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      this.setState({ tasks: Object.values(data) })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
   
   render() {
     return (
@@ -46,6 +59,7 @@ class App extends Component {
                 ]
               }
             }
+            updateTasks={() => this.updateTasks()}
             key={index} />
         })}
         </div>

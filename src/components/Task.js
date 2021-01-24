@@ -2,12 +2,14 @@ import React from 'react';
 import classes from './Task.module.css';
 import axios from '../axios';
 
-function Task({ task }) {
+function Task({ task, updateTasks }) {
 
-    function handleComplete(task_id) {
-        axios.post(('/delete_task/' + task_id))
+    async function handleComplete(task_id) {
+        axios.post(('http://127.0.0.1:5000/delete_task/' + task_id))
         .then(response => console.log(response))
         .catch(error => console.log(error))
+
+        updateTasks();
     }
 
 
