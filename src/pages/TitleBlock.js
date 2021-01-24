@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Heading from "../components/Heading";
 import classes from '../components/Task.module.css'
 
 class TitleBlock extends Component {
@@ -10,7 +9,7 @@ class TitleBlock extends Component {
 
     return (
       <div>
-        <Heading />
+        <p className={ classes.Heading }>Today</p>
         <p className={ classes.TitleBlock } >{ months[ date.getMonth() ] } { date.getDate() }, { date.getFullYear() } </p>
       </div>
     );
