@@ -1,11 +1,14 @@
 import React from 'react';
 import classes from './Task.module.css';
-function Task({task, handleComplete }) {
-    // function handleComplete(task_id) {
-    //     post(('/delete_task/' + task_id))
-    //     .then(response => console.log(response))
-    //     .catch(error => console.log(error))
-    // }
+import axios from '../axios';
+
+function Task({ task }) {
+
+    function handleComplete(task_id) {
+        axios.post(('/delete_task/' + task_id))
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+    }
 
 
     // Temporary way to set colours of tags
@@ -31,7 +34,7 @@ function Task({task, handleComplete }) {
                         type="checkbox" 
                         name="complete_task" 
                         className={ classes.Checkbox } 
-                        onClick={() => handleComplete()} />
+                        onClick={() => handleComplete(task.id)} />
                 </form>
             </div>
             <div className={ classes.SubcontTwo } >

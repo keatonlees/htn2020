@@ -1,14 +1,17 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 import pytz
 import models
-from models import init_db
+from models import init_db, Task, Tag
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
+
 init_db(app)
+
+from models import db
 
 
 def get_timezone():
@@ -34,27 +37,38 @@ def get_date():
         # 'date' : local_dt.strftime("%A, %B %d")
     })
 
+
 @app.route('/get_tasks', methods=['GET'])
 def get_tasks():
-    tasks = todo.query.order_by(todo.date_created).all()
+    from_db = Task.query.order_by(Task.date_start).all()
+    tasks = {}
+
+    for task in from_db:
+        tasks[task.id] = {
+            'id': task.id,
+            'title': task.task_title,
+            'content': task.task_content,
+            'due': task.date_end
+        }
+    return jsonify(tasks)
 
 
 @app.route('/create_task', methods=['POST'])
 def create_task():
-    title = request.form['title'] # Task title
-    content = request.form['content'] # Task content
-    due = request.form['date_end'] # Task due date
+    title = request.form.get('title') # Task title
+    content = request.form.get('content') # Task content
+    # due = request.form.get('date_end') # Task due date
 
     # Create the new tasks
-    new_task = Task(task_title=task, task_content=content, date_end=due)
+    new_task = Task(task_title=title, task_content=content)
 
     # Try to add to db
     try:
         db.session.add(new_task)
         db.session.commit()
-        return True # Return True if commit is successful
+        return redirect('http://localhost:3000/')
     except:
-        return False
+        return {'message': 'error'}, 400
 
 
 @app.route('/delete_task/<int:id>')

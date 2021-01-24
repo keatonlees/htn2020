@@ -20,17 +20,11 @@ class Task(db.Model):
     task_title = db.Column(db.String(50), nullable=False)
     task_content = db.Column(db.String(500), nullable=False)
     date_start = db.Column(db.DateTime, default=datetime.utcnow)
-    date_end = db.Column(db.DateTime)
+    date_end = db.Column(db.DateTime, default=datetime.utcnow)
     tags = db.relationship("Tag", secondary=task_tag_table, backref=db.backref('tasks_associated', lazy='joined'))
-
-    def __repr__(self):
-        return '<Task %r>' % self.id
 
 
 class Tag(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     tag_title = db.Column(db.String(50), nullable=False)
     tag_desc = db.Column(db.String(500))
-
-    def __repr__(self):
-        return '<Tag %r>' % self.id

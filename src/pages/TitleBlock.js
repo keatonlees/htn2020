@@ -3,28 +3,15 @@ import Heading from "../components/Heading";
 import classes from '../components/Task.module.css'
 
 class TitleBlock extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: null
-    };
-  }
   
-  componentDidMount() {
-    fetch('/_get_date')
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        this.setState({ date: data["date"]})
-      });
-  };
-
   render() {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let date = new Date();
+
     return (
       <div>
         <Heading />
-        <p className={ classes.TitleBlock } >{ this.state.date }</p>
+        <p className={ classes.TitleBlock } >{ months[ date.getMonth() ] } { date.getDate() }, { date.getFullYear() } </p>
       </div>
     );
   }
