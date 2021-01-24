@@ -3,6 +3,7 @@ import "./App.css";
 import TitleBlock from "./pages/TitleBlock";
 import Task from './components/Task';
 import NewTaskForm from './components/NewTaskForm';
+import addButton from './assets/images/addButton.png';
 
 class App extends Component {
   constructor(props) {
@@ -61,6 +62,7 @@ class App extends Component {
             key={index} />
         })}
         </div>
+        <img src={addButton} alt="Create a new task"/>
       </div>
     );
   }
