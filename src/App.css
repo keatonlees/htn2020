@@ -33,4 +33,5 @@
   width: 90%;
   border-radius: 5px;
   padding-left: 1rem;
+  z-index: 100;
 }

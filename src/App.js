@@ -3,13 +3,15 @@ import "./App.css";
 import TitleBlock from "./pages/TitleBlock";
 import Task from './components/Task';
 import NewTaskForm from './components/NewTaskForm';
+import Backdrop from './components/Backdrop';
 import addButton from './assets/images/addButton.png';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: null
+      tasks: null,
+      showForm: false
     };
   }
   
@@ -42,7 +44,14 @@ class App extends Component {
   render() {
     return (
       <div className="app" >
-        <NewTaskForm />
+        {this.state.showForm 
+        ? <NewTaskForm /> 
+        : ''}
+        {this.state.showForm 
+        ? <Backdrop onClick={() => this.setState(prevState => {
+          return{...prevState, showForm: !prevState.showForm}
+        })} /> 
+        : ''}
         <TitleBlock />
         <div className="todo-list">
           {this.state.tasks && this.state.tasks.map(( todo, index ) => {
@@ -62,7 +71,9 @@ class App extends Component {
             key={index} />
         })}
         </div>
-        <img src={addButton} alt="Create a new task"/>
+        <img src={addButton} alt="Create a new task" onClick={() => this.setState(prevState => {
+          return{...prevState, showForm: !prevState.showForm}
+        })} />
       </div>
     );
   }
