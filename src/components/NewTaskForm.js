@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css"
 
 function NewTaskForm() {
+    const [dueDate, setDueDate] = useState('');
   
     return (
       <form action='http://127.0.0.1:5000/create_task' method='POST' >
@@ -28,11 +31,12 @@ function NewTaskForm() {
             <option value="School" >School</option>
         </select><br /><br />
         <label for="date_end" >Due</label>
-        <input
+        <DatePicker
           id="date_end"
           name="date_end"
-          type="text"
-          className="input"
+          selected={Date.parse(dueDate)}
+          value={dueDate}
+          onChange={date => {setDueDate([date.toString().slice(0, 3), ', ', date.toString().slice(4, 24)].join(''))}}
         /><br /><br />
         <input
           type="submit"

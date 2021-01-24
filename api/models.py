@@ -20,7 +20,7 @@ class Task(db.Model):
     task_title = db.Column(db.String(50), nullable=False)
     task_content = db.Column(db.String(500), nullable=False)
     date_start = db.Column(db.DateTime, default=datetime.utcnow)
-    date_end = db.Column(db.DateTime, default=datetime.utcnow)
+    date_end = db.Column(db.DateTime)
     tags = db.relationship("Tag", secondary=task_tag_table, backref=db.backref('tasks_associated', lazy='joined'))
 
 

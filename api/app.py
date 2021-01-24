@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-import datetime
+
+from datetime import datetime
 import pytz
 import models
 from models import init_db, Task, Tag
@@ -57,10 +58,9 @@ def get_tasks():
 def create_task():
     title = request.form.get('title') # Task title
     content = request.form.get('content') # Task content
-    # due = request.form.get('date_end') # Task due date
-
+    due = datetime.strptime(request.form.get('date_end'), '%a, %b %d %Y %H:%M:%S') # Task due date
     # Create the new tasks
-    new_task = Task(task_title=title, task_content=content)
+    new_task = Task(task_title=title, task_content=content, date_end=due)
 
     # Try to add to db
     try:
