@@ -3,7 +3,6 @@ import "./App.css";
 import TitleBlock from "./pages/TitleBlock";
 import Task from './components/Task';
 import NewTaskForm from './components/NewTaskForm';
-import Backdrop from './components/Backdrop';
 import addButton from './assets/images/addButton.png';
 
 class App extends Component {
@@ -40,17 +39,16 @@ class App extends Component {
       console.log(error)
     })
   }
+
+  closeForm = () => {
+    this.setState({showForm: false});
+  }
   
   render() {
     return (
       <div className="app" >
         {this.state.showForm 
-        ? <NewTaskForm /> 
-        : ''}
-        {this.state.showForm 
-        ? <Backdrop onClick={() => this.setState(prevState => {
-          return{...prevState, showForm: !prevState.showForm}
-        })} /> 
+        ? <NewTaskForm closeForm={ this.closeForm } /> 
         : ''}
         <TitleBlock />
         <div className="todo-list">
