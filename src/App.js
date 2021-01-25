@@ -3,14 +3,14 @@ import "./App.css";
 import TitleBlock from "./pages/TitleBlock";
 import Task from './components/Task';
 import NewTaskForm from './components/NewTaskForm';
-
-const tags = ['Home', 'Work', 'School'];
+import addButton from './assets/images/addButton.png';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: null
+      tasks: null,
+      showForm: false
     };
   }
   
@@ -39,22 +39,28 @@ class App extends Component {
       console.log(error)
     })
   }
+
+  closeForm = () => {
+    this.setState({showForm: false});
+  }
   
   render() {
     return (
       <div className="app" >
-        <NewTaskForm />
+        {this.state.showForm 
+        ? <NewTaskForm closeForm={ this.closeForm } /> 
+        : ''}
         <TitleBlock />
         <div className="todo-list">
           {this.state.tasks && this.state.tasks.map(( todo, index ) => {
             return <Task task={
               {
                 'id': todo.id,
-                'title': todo.content,
+                'title': todo.title,
                 'due_date': todo.due,
                 'tags': [
                   {
-                    'title': tags[Math.floor(Math.random() * Math.floor(3))]
+                    'title': todo.tag
                   }
                 ]
               }
@@ -63,6 +69,14 @@ class App extends Component {
             key={index} />
         })}
         </div>
+        <img 
+          src={addButton} 
+          alt="Create a new task" 
+          onClick={() => this.setState(prevState => {
+            return{...prevState, showForm: !prevState.showForm}
+          })} 
+          className="new-button"
+        />
       </div>
     );
   }
