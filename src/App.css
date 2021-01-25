@@ -1,7 +1,6 @@
 .app {
   width: 350px;
   height: 100vh;
-  padding: 30px;
 }
 
 .todo-list {
@@ -34,4 +33,9 @@
   border-radius: 5px;
   padding-left: 1rem;
   z-index: 100;
+}
+
+.new-button {
+  margin-top: 5rem;
+  float: right;
 }

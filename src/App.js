@@ -69,9 +69,14 @@ class App extends Component {
             key={index} />
         })}
         </div>
-        <img src={addButton} alt="Create a new task" onClick={() => this.setState(prevState => {
-          return{...prevState, showForm: !prevState.showForm}
-        })} />
+        <img 
+          src={addButton} 
+          alt="Create a new task" 
+          onClick={() => this.setState(prevState => {
+            return{...prevState, showForm: !prevState.showForm}
+          })} 
+          className="new-button"
+        />
       </div>
     );
   }
