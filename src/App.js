@@ -10,7 +10,8 @@ class App extends Component {
     super(props);
     this.state = {
       tasks: null,
-      showForm: false
+      showForm: false,
+      showCard: false
     };
   }
   
@@ -42,6 +43,10 @@ class App extends Component {
 
   closeForm = () => {
     this.setState({showForm: false});
+  }
+
+  closeCard = () => {
+    this.setState({showCard: false});
   }
   
   render() {

@@ -34,10 +34,11 @@ function NewTaskForm(props) {
               <option value="Work" >Work</option>
               <option value="School" >School</option>
           </select><br /><br />
-          <label for="date_end" >Due</label>
+          <label for="date_end" >Due</label><br />
           <DatePicker
             id="date_end"
             name="date_end"
+            className="input"
             selected={Date.parse(dueDate)}
             value={dueDate}
             onChange={date => {setDueDate([date.toString().slice(0, 3), ', ', date.toString().slice(4, 24)].join(''))}}
@@ -45,6 +46,7 @@ function NewTaskForm(props) {
           <input
             type="submit"
             value="Create task"
+            className="submit-button"
           />
         </form>
       </>
